@@ -73,7 +73,7 @@ disp('----------------------------------------');
 
 T = 0.1;
 
-omega  = degtorad([90 90 0]);
+omega  = degtorad([90 0 0]);
 qomega = quaternionFromAngularVelocity(omega, T);
 
 q = [1 0 0 0];
@@ -89,4 +89,3 @@ Zq = quaternionRotateVector(q, [0; 0; 1]);
 fprintf('Xq:   %10.2f  %10.2f  %10.2f\n',   Xq(1), Xq(2), Xq(3));
 fprintf('Yq:   %10.2f  %10.2f  %10.2f\n',   Yq(1), Yq(2), Yq(3));
 fprintf('Zq:   %10.2f  %10.2f  %10.2f\n\n', Zq(1), Zq(2), Zq(3));
-
