@@ -89,3 +89,53 @@ Zq = quaternionRotateVector(q, [0; 0; 1]);
 fprintf('Xq:   %10.2f  %10.2f  %10.2f\n',   Xq(1), Xq(2), Xq(3));
 fprintf('Yq:   %10.2f  %10.2f  %10.2f\n',   Yq(1), Yq(2), Yq(3));
 fprintf('Zq:   %10.2f  %10.2f  %10.2f\n\n', Zq(1), Zq(2), Zq(3));
+
+
+
+%% Angular velocity: Determine angular velocity from two quaternions
+
+clear all; disp('Angular velocity: Determine angular velocity from two quaternions');
+disp('----------------------------------------');
+
+T = 0.1;
+
+omega  = degtorad([90 45 22.5]);
+qomega = quaternionFromAngularVelocity(omega, T);
+
+q = [1 0 0 0];
+
+N = 1/T;
+for i = 1:N
+    q_previous = q;
+    q = quaternionMul(qomega, q);
+    
+    derived_omega = quaternionToAngularVelocity(q, q_previous, T);
+end
+
+expect = omega;
+maximumError = max(max(expect - derived_omega))
+
+
+
+%% Angular velocity: Determine angular velocity from two quaternions using SLERP differentiation
+
+clear all; disp('Angular velocity: Determine angular velocity from two quaternions (hypersphere)');
+disp('----------------------------------------');
+
+T = 0.1;
+
+omega  = degtorad([90 45 22.5]);
+qomega = quaternionFromAngularVelocity(omega, T);
+
+q = [1 0 0 0];
+
+N = 1/T;
+for i = 1:N
+    q_previous = q;
+    q = quaternionMul(qomega, q);
+    
+    derived_omega = quaternionToAngularVelocity2(q, q_previous, T);
+end
+
+expect = omega;
+maximumError = max(max(expect - derived_omega))
